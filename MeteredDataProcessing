@@ -1,0 +1,197 @@
+# %load ../standard_import.txt
+import pandas as pd
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+import warnings
+warnings.filterwarnings("ignore")
+# To manipulate the time series data 
+import datetime
+import calendar
+# choose formatting 
+import seaborn as sns
+%matplotlib inline
+plt.style.use('seaborn-white')
+
+# load dataset 
+# co2 concentration data collected from multiple sensors 
+dfCO2_1 = pd.read_csv(r"C:\.csv")
+dfCO2_2 = pd.read_csv(r"C:\.csv")
+dfCO2_3 = pd.read_csv(r"C:\.csv")
+# To opt out the missing data, sensor 4 was broken/offline for this collection period
+#dfCO2_4 = pd.read_csv(r"C:\.csv")
+dfCO2_5 = pd.read_csv(r"C:\.csv")
+dfCO2_6 = pd.read_csv(r"C:\.csv")
+dfCO2_7 = pd.read_csv(r"C:\.csv")
+dfCO2_8 = pd.read_csv(r"C:\.csv")
+
+# Convert the data to datetime
+dfCO2_1['DateTime'] = pd.to_datetime(dfCO2_1['DateTime'])
+dfCO2_2['DateTime'] = pd.to_datetime(dfCO2_2['DateTime'])
+dfCO2_3['DateTime'] = pd.to_datetime(dfCO2_3['DateTime'])
+#dfCO2_4['DateTime'] = pd.to_datetime(dfCO2_4['DateTime'])
+dfCO2_5['DateTime'] = pd.to_datetime(dfCO2_5['DateTime'])
+dfCO2_6['DateTime'] = pd.to_datetime(dfCO2_6['DateTime'])
+dfCO2_7['DateTime'] = pd.to_datetime(dfCO2_7['DateTime'])
+dfCO2_8['DateTime'] = pd.to_datetime(dfCO2_8['DateTime'])
+
+# Exploratory Analysis
+# Tag the week day or weekend
+
+# Find out what day of the week
+dfCO2_1["DAYOFWEEK"]=dfCO2_1["DateTime"].dt.dayofweek
+dfCO2_1["NAMEOFDAY"]=dfCO2_1["DateTime"].dt.day_name()
+print(dfCO2_1.head())
+dfCO2_2["DAYOFWEEK"]=dfCO2_2["DateTime"].dt.dayofweek
+dfCO2_2["NAMEOFDAY"]=dfCO2_2["DateTime"].dt.day_name()
+dfCO2_3["DAYOFWEEK"]=dfCO2_3["DateTime"].dt.dayofweek
+dfCO2_3["NAMEOFDAY"]=dfCO2_3["DateTime"].dt.day_name()
+#dfCO2_4["DAYOFWEEK"]=dfCO2_4["DateTime"].dt.dayofweek
+#dfCO2_4["NAMEOFDAY"]=dfCO2_4["DateTime"].dt.day_name()
+dfCO2_5["DAYOFWEEK"]=dfCO2_5["DateTime"].dt.dayofweek
+dfCO2_5["NAMEOFDAY"]=dfCO2_5["DateTime"].dt.day_name()
+dfCO2_6["DAYOFWEEK"]=dfCO2_6["DateTime"].dt.dayofweek
+dfCO2_6["NAMEOFDAY"]=dfCO2_6["DateTime"].dt.day_name()
+dfCO2_7["DAYOFWEEK"]=dfCO2_7["DateTime"].dt.dayofweek
+dfCO2_7["NAMEOFDAY"]=dfCO2_7["DateTime"].dt.day_name()
+dfCO2_8["DAYOFWEEK"]=dfCO2_8["DateTime"].dt.dayofweek
+dfCO2_8["NAMEOFDAY"]=dfCO2_8["DateTime"].dt.day_name()
+
+# tag year, month, date, hour, min, time etc. 
+dfCO2_1["YEAR"]=dfCO2_1["DateTime"].dt.year
+dfCO2_1["MONTH"]=dfCO2_1["DateTime"].dt.month
+dfCO2_1["DATE"]=dfCO2_1["DateTime"].dt.date
+dfCO2_1["HOUR"]=dfCO2_1["DateTime"].dt.hour
+dfCO2_1["MINUTE"]=dfCO2_1["DateTime"].dt.minute
+dfCO2_1["TIME"]=dfCO2_1["DateTime"].dt.time
+dfCO2_1["DATE_NAMEOFDAY"]=dfCO2_1['DATE'].astype(str) + '_' + dfCO2_1['NAMEOFD
+AY']
+print(dfCO2_1.head())
+# tag the following sensors in the same way 
+dfCO2_2["YEAR"]=dfCO2_2["DateTime"].dt.year
+dfCO2_2["MONTH"]=dfCO2_2["DateTime"].dt.month
+dfCO2_2["DATE"]=dfCO2_2["DateTime"].dt.date
+dfCO2_2["HOUR"]=dfCO2_2["DateTime"].dt.hour
+dfCO2_2["MINUTE"]=dfCO2_2["DateTime"].dt.minute
+dfCO2_2["TIME"]=dfCO2_2["DateTime"].dt.time
+dfCO2_2["DATE_NAMEOFDAY"]=dfCO2_2['DATE'].astype(str) + '_' + dfCO2_2['NAMEOFD
+AY']
+dfCO2_3["YEAR"]=dfCO2_3["DateTime"].dt.year
+dfCO2_3["MONTH"]=dfCO2_3["DateTime"].dt.month
+dfCO2_3["DATE"]=dfCO2_3["DateTime"].dt.date
+dfCO2_3["HOUR"]=dfCO2_3["DateTime"].dt.hour
+dfCO2_3["MINUTE"]=dfCO2_3["DateTime"].dt.minute
+dfCO2_3["TIME"]=dfCO2_3["DateTime"].dt.time
+dfCO2_3["DATE_NAMEOFDAY"]=dfCO2_3['DATE'].astype(str) + '_' + dfCO2_3['NAMEOFD
+AY']
+#dfCO2_4["YEAR"]=dfCO2_4["DateTime"].dt.year
+#dfCO2_4["MONTH"]=dfCO2_4["DateTime"].dt.month
+#dfCO2_4["DATE"]=dfCO2_4["DateTime"].dt.date
+#dfCO2_4["HOUR"]=dfCO2_4["DateTime"].dt.hour
+#dfCO2_4["MINUTE"]=dfCO2_4["DateTime"].dt.minute
+#dfCO2_4["TIME"]=dfCO2_4["DateTime"].dt.time
+#dfCO2_4["DATE_NAMEOFDAY"]=dfCO2_4['DATE'].astype(str) + '_' + dfCO2_4['NAMEOF
+DAY']
+dfCO2_5["YEAR"]=dfCO2_5["DateTime"].dt.year
+dfCO2_5["MONTH"]=dfCO2_5["DateTime"].dt.month
+dfCO2_5["DATE"]=dfCO2_5["DateTime"].dt.date
+dfCO2_5["HOUR"]=dfCO2_5["DateTime"].dt.hour
+dfCO2_5["MINUTE"]=dfCO2_5["DateTime"].dt.minute
+dfCO2_5["TIME"]=dfCO2_5["DateTime"].dt.time
+dfCO2_5["DATE_NAMEOFDAY"]=dfCO2_5['DATE'].astype(str) + '_' + dfCO2_5['NAMEOFD
+AY']
+dfCO2_6["YEAR"]=dfCO2_6["DateTime"].dt.year
+dfCO2_6["MONTH"]=dfCO2_6["DateTime"].dt.month
+dfCO2_6["DATE"]=dfCO2_6["DateTime"].dt.date
+dfCO2_6["HOUR"]=dfCO2_6["DateTime"].dt.hour
+dfCO2_6["MINUTE"]=dfCO2_6["DateTime"].dt.minute
+
+dfCO2_7["YEAR"]=dfCO2_7["DateTime"].dt.year
+dfCO2_7["MONTH"]=dfCO2_7["DateTime"].dt.month
+dfCO2_7["DATE"]=dfCO2_7["DateTime"].dt.date
+dfCO2_7["HOUR"]=dfCO2_7["DateTime"].dt.hour
+dfCO2_7["MINUTE"]=dfCO2_7["DateTime"].dt.minute
+dfCO2_7["TIME"]=dfCO2_7["DateTime"].dt.time
+dfCO2_7["DATE_NAMEOFDAY"]=dfCO2_7['DATE'].astype(str) + '_' + dfCO2_7['NAMEOFD
+AY']
+dfCO2_8["YEAR"]=dfCO2_8["DateTime"].dt.year
+dfCO2_8["MONTH"]=dfCO2_8["DateTime"].dt.month
+dfCO2_8["DATE"]=dfCO2_8["DateTime"].dt.date
+dfCO2_8["HOUR"]=dfCO2_8["DateTime"].dt.hour
+dfCO2_8["MINUTE"]=dfCO2_8["DateTime"].dt.minute
+dfCO2_8["TIME"]=dfCO2_8["DateTime"].dt.time
+dfCO2_8["DATE_NAMEOFDAY"]=dfCO2_8['DATE'].astype(str) + '_' + dfCO2_8['NAMEOFD
+AY']
+
+# Pivot those information, so we can view them in a 24/7 format 
+dfCO2_1.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+
+dfCO2_1 = dfCO2_1.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+dfCO2_2 = dfCO2_2.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+dfCO2_3 = dfCO2_3.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+#dfCO2_4 = dfCO2_4.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+dfCO2_5 = dfCO2_5.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+dfCO2_6 = dfCO2_6.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+dfCO2_7 = dfCO2_7.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+dfCO2_8 = dfCO2_8.pivot_table('CO2', index='TIME', columns='DATE_NAMEOFDAY')
+
+# Create plot for one room post retrofitting:
+fig, (ax1,ax2,ax3,ax4,ax5,ax6,ax7) = plt.subplots(7,1, figsize=(20,13), sharex
+=True, constrained_layout=True)
+ax1.plot(dfCO2_1.index, dfCO2_1["2020-11-05_Thursday"], dfCO2_1.index, dfCO2_1
+["2020-11-12_Thursday"])
+ax2.plot(dfCO2_2.index, dfCO2_2["2020-11-05_Thursday"], dfCO2_2.index, dfCO2_2
+["2020-11-12_Thursday"])
+ax3.plot(dfCO2_3.index, dfCO2_3["2020-11-05_Thursday"], dfCO2_3.index, dfCO2_3
+["2020-11-12_Thursday"])
+#ax4.plot(dfCO2_4.index, dfCO2_4["2020-11-05_Thursday"], dfCO2_4.index, dfCO2_
+4["2020-11-12_Thursday"])
+ax4.plot(dfCO2_5.index, dfCO2_5["2020-11-05_Thursday"], dfCO2_5.index, dfCO2_5
+["2020-11-12_Thursday"])
+ax5.plot(dfCO2_6.index, dfCO2_6["2020-11-05_Thursday"], dfCO2_6.index, dfCO2_6
+["2020-11-12_Thursday"])
+ax6.plot(dfCO2_7.index, dfCO2_7["2020-11-05_Thursday"], dfCO2_7.index, dfCO2_7
+["2020-11-12_Thursday"])
+ax7.plot(dfCO2_8.index, dfCO2_8["2020-11-05_Thursday"], dfCO2_8.index, dfCO2_8
+["2020-11-12_Thursday"])
+
+# set label for those graphs 
+ax1.set_ylabel('Ketcham Classroom 217',size=20,rotation=0)
+ax2.set_ylabel('Turner Media Center',size=20, rotation=0)
+ax3.set_ylabel('Tubman Teacher Lounge',size=20, rotation=0)
+#ax4.set_ylabel('Thomas Multipurpose',size=20, rotation=0)
+ax4.set_ylabel('NallePre-k Classroom',size=20, rotation=0)
+ax5.set_ylabel('Meyer Office',size=20, rotation=0)
+ax6.set_ylabel('Lafayette Library',size=20, rotation=0)
+ax7.set_ylabel('Bancroft Cafe',size=20, rotation=0)
+
+#create shared x -axis 
+ax7.tick_params(direction='in', length=3, width=2,labelsize=20)
+ax7.set_xticks(['00:00','02:00','04:00','06:00','08:00','10:00','12:00','14:0
+0','16:00','18:00','20:00','22:00' ])
+
+# set title and legend for all charts
+ax1.set_title('CO2 Concentration(ppm)',size=30)
+ax1.legend(["2020-11-05_Thursday","2020-11-12_Thursday",""], prop={'size': 15}
+, loc="upper center", ncol=1, bbox_to_anchor=(0.9,1.6))
+ax7.set_xlabel('Time',size=20)
+for ax in fig.axes:
+    ax.set_xlabel('',size=20)
+    ax.tick_params(direction='in', length=3, width=2,labelsize=20)
+    ax.set_xlim(xmin="00:00")
+    ax.set_xlim(xmax="23:59")
+# set the limit higher than 380ppm for CO2 concentration for a typical day 
+    ax.set_ylim(ymin=380)
+
+
+    ax.set_ylim(ymax=700)
+    ax.set_yticks([ 400, 500, 600, 700 ])
+    ax.grid(True)
+    ax.yaxis.set_label_coords(-0.15,0.5)
+
+ax7.set_xlabel('Time',size=20)
+
+#Save figure 
+fig.savefig("C:/.png")
+
